@@ -1,0 +1,16 @@
+{
+  "name": "@orange-opensource/get-deep-property",
+  "version": "1.0.0",
+  "description": "Looks deep in an object for the value of a property",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodejs ./test/"
+  },
+  "keywords": [
+    "deep",
+    "property",
+    "object"
+  ],
+  "author": "Benoît Bailleux",
+  "license": "BSD-3-Clause"
+}
