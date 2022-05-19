@@ -1,8 +1,8 @@
 # get-deep-property
 
-![license](https://img.shields.io/github/license/Orange-OpenSource/getDeepProperty)
-![version](https://img.shields.io/github/package-json/v/Orange-OpenSource/getDeepProperty)
-![npm](https://img.shields.io/npm/dm/get-deep-property)
+[![license](https://img.shields.io/github/license/Orange-OpenSource/getDeepProperty)]()
+[![version](https://img.shields.io/github/package-json/v/Orange-OpenSource/getDeepProperty)]()
+[![npm downloads](https://img.shields.io/npm/dm/get-deep-property)]()
 
 **getDeepProperty** looks deep for the value of a plain JavaScript object property
 
