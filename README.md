@@ -2,18 +2,18 @@
 
 [![license](https://img.shields.io/github/license/Orange-OpenSource/getDeepProperty)]()
 [![version](https://img.shields.io/github/package-json/v/Orange-OpenSource/getDeepProperty)]()
-[![npm downloads](https://img.shields.io/npm/dm/get-deep-property)]()
+[![npm downloads](https://img.shields.io/npm/dm/@orange-opensource/get-deep-property)]()
 
 **getDeepProperty** looks deep for the value of a plain JavaScript object property
 
-* Gives access to any nested named property of plain object
+* Gives access to any nested named property of plain objects
 * Uses exclusively a dot separated properties names list, in a string
 * Array content can be addressed through index
 * Returns the property value or `undefined` if it does not exist
 * It should never throw an exception
 * No dependency
 
-> _Note_: it comes with its own super tiny test framework…
+> _Note_: it comes with its own super tiny, super simple test framework…
 
 ## Quick start
 
@@ -25,7 +25,7 @@ Use _npm_ as usual to install this package:
 npm install @orange-opensource/get-deep-property
 ```
 
-Or clone from GitHub:
+Or clone it from GitHub:
 
 ```shell
 $ git clone https://github.com/Orange-OpenSource/getDeepProperty.git
@@ -36,7 +36,7 @@ Cloning into 'getDeepProperty'...
 ### Syntax
 
 > ```js
-> getDeepProperty(sourceObject, propertyPath)
+> result = getDeepProperty(sourceObject, propertyPath)
 > ```
 
 Parameters:
@@ -92,15 +92,74 @@ Another working example:
   console.log("Result:", getDeepProperty(obj, propertyPath));
 ```
 
-And the result will simply be:
+When ran, the result will simply be:
 
 ```console
 Result: 42
 ```
 
+See the `test/getDeepProperty.unit.js` file for other examples.
+
+## Contributing
+
+Please report any bug or feature request by [opening an issue](https://github.com/Orange-OpenSource/getDeepProperty/issues).
+
+> _Note_:
+>
+> One important design goal of this module is to keep it very small and simple. So please have in mind this
+> principle before creating a _feature request_.
+
+### Building docs
+
+A builtin documentation is available in the code (and must be maintained by contributors). Most [IDEs](https://en.wikipedia.org/wiki/Integrated_development_environment) will use this documentation to display usage guide for this module.
+
+You may generate an HTML version of the documentation with the help of [JSDoc](https://github.com/jsdoc/jsdoc#readme).
+
+To generate the doc, just follow below steps:
+
+1. install `jsdoc` with (see its documentation for details)
+   
+   ```shell
+   $ npm install -g jsdoc
+   ```
+2. create a [configuration file](https://jsdoc.app/about-configuring-jsdoc.html) (e.g. `jsdoc.conf.json`) in order to,
+   at least, enable [the Markdown plugin](https://jsdoc.app/plugins-markdown.html)
+
+   ```json
+     {
+        "plugins": ["plugins/markdown"]
+     }
+   ```
+3. Generate the documentation with command:
+   
+   ```sh
+   $ jsdoc --configure /path/to/jsdoc.conf.json --access all --readme README.md --destination /path/to/html/doc .
+   ```
+
+### Running tests
+
+Running and reviewing unit tests is a great way to get familiarized with a library and its API, even when very simple.
+You can run unit tests with the following command:
+
+```sh
+$ npm test
+```
+
+Any file in the `test` directory suffixed with `.unit.js` will be ran.
+
+### Submitting code
+
+Before submitting a Pull Request, please check that your work follows these requirements:
+
+1. All unit tests are up to date and OK
+2. The documentation is up to date
+3. Your _commit_ follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) guidelines
+4. You agree to the [Developer Certificate of Origin](https://developercertificate.org/) by signing-off your commit
+   (use the `-s` option for `git commit`)
+
 ## License
 
-This code is released under the BSD 3-clause license
+This code is released under the terms of the _BSD 3-clause_ license
 
 Copyright (c) 2022 Orange SA
 

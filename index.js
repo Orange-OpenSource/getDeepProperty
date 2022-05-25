@@ -16,6 +16,42 @@
  */
 
 /**
+ * Look deep for the value of an object property.
+ *
+ * **Example**:
+ *
+ * With the following object:
+ * ```json
+ * {
+ *   part: "main",
+ *   header: {
+ *     name: "x-example",
+ *     type: "string"
+ *   }
+ * }
+ * ```
+ * And the property path "`header.name`"
+ *
+ * The result is:
+ *
+ * > "`x-example`"
+ *
+ * @param {object} obj - the object into which the property is available
+ * @param {string} dottedPropName - the deep name of a property, with dotted notation
+ * @returns {any} The property value or `undefined` if it does not exist
+ */
+const getDeepProperty = function (obj, dottedPropName) {
+  if (!dottedPropName || !obj) {
+    return undefined;
+  }
+  if (typeof dottedPropName !== 'string' && !(dottedPropName instanceof String)) {
+    return undefined;
+  }
+  const propList = dottedPropName.split('.');
+  return _getDeep(obj, propList);
+};
+
+/**
  * Recursively gets the sub-properties in a object, designated by the ordered names in an array
  *
  * **Example**:
@@ -46,38 +82,6 @@ const _getDeep = function (obj, propList) {
   } else {
     return obj;
   }
-};
-
-/**
- * Look deep for the value of an object property.
- *
- * **Example**:
- * With the following object:
- * ```json
- * {
- *   part: "main",
- *   header: {
- *     name: "x-example",
- *     type: "string"
- *   }
- * }
- * ```
- * And the property named "`header.name`"
- *
- * The result is:
- *
- * > "`x-example`"
- *
- * @param {object} obj - the object into which the property is available
- * @param {string} dottedPropName - the deep name of a property, with dotted notation
- * @returns {any} The property value or `undefined` if it does not exist
- */
-const getDeepProperty = function (obj, dottedPropName) {
-  if (!dottedPropName || !obj) {
-    return undefined;
-  }
-  const propList = dottedPropName.split('.');
-  return _getDeep(obj, propList);
 };
 
 module.exports = getDeepProperty;

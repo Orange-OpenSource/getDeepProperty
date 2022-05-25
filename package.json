@@ -1,7 +1,7 @@
 {
   "name": "@orange-opensource/get-deep-property",
   "description": "Looks deep in an object for the value of a property",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/Orange-OpenSource/getDeepProperty",
   "repository": {
     "type": "git",

@@ -11,6 +11,9 @@
  * @author Benoît BAILLEUX <benoit.bailleux@orange.com>
  */
 
+/**
+ * @ignore
+ */
 const getDeepProperty = require('../index');
 const assert = require('assert');
 const {describe, it} = require('./testFramework');
@@ -22,6 +25,18 @@ describe('Nominal cases', () => {
     // When
     const expected = 1;
     const lookup = 'a';
+    // when
+    const res = getDeepProperty(input, lookup);
+    // Then
+    assert.strictEqual(res, expected);
+  });
+
+  it('should return the attribute value for a simple object when the Path is a String object', () => {
+    // Given
+    const input = {a: {b: 42}};
+    // When
+    const expected = 42;
+    const lookup = new String('a.b');
     // when
     const res = getDeepProperty(input, lookup);
     // Then
@@ -79,12 +94,12 @@ describe('Nominal cases', () => {
     const input = {
       'all-special': {
         'somewhat deep': {
-          last_name: 'OK'
+          'last_*': 'OK'
         }
       }
     };
     const expected = 'OK';
-    const lookup = 'all-special.somewhat deep.last_name';
+    const lookup = 'all-special.somewhat deep.last_*';
     // when
     const res = getDeepProperty(input, lookup);
     // Then
@@ -163,11 +178,22 @@ describe('Nominal cases', () => {
       assert.strictEqual(result, expected);
     });
 
-    it('should return the property of an an object embedded in an array', () => {
+    it('should return the property value of an object embedded in an array', () => {
       // Given
       const obj = {a: null, b: [{x: 1}, {x: 2}]};
       const lookup = 'b.0.x';
       const expected = 1;
+      // When
+      const result = getDeepProperty(obj, lookup);
+      // Then
+      assert.strictEqual(result, expected);
+    });
+
+    it('should process array as an object', () => {
+      // Given
+      const obj = [{x: 1}, {x: 42}, {x: 3}, {x: 4}];
+      const lookup = '1.x';
+      const expected = 42;
       // When
       const result = getDeepProperty(obj, lookup);
       // Then
@@ -205,7 +231,29 @@ describe('Special cases', () => {
     // Given
     const input = undefined;
     const expected = undefined;
-    const lookup = 'body.deep.IDONTEXIST.next.end';
+    const lookup = 'body.deep.I_DO_NOT_EXIST.next.end';
+    // when
+    const res = getDeepProperty(input, lookup);
+    // Then
+    assert.strictEqual(res, expected);
+  });
+
+  it('Should return "undefined" (without error) when looking for a deep property in a string scalar (thus not an object)', function () {
+    // Given
+    const input = "I am a string, not an object";
+    const expected = undefined;
+    const lookup = 'body.deep.I_DO_NOT_EXIST.next.end';
+    // when
+    const res = getDeepProperty(input, lookup);
+    // Then
+    assert.strictEqual(res, expected);
+  });
+
+  it('Should return "undefined" (without error) when looking for a deep property in a boolean scalar (thus not an object)', function () {
+    // Given
+    const input = true;
+    const expected = undefined;
+    const lookup = 'body.deep.I_DO_NOT_EXIST.next.end';
     // when
     const res = getDeepProperty(input, lookup);
     // Then
@@ -234,11 +282,36 @@ describe('Special cases', () => {
     assert.strictEqual(res, expected);
   });
 
+  it('Should return "undefined" (without error) when looking for a non string property path', () => {
+    // Given
+    const input = {
+      '1': 1
+    };
+    // When
+    const expected = undefined;
+    const lookup = 1;
+    // when
+    const res = getDeepProperty(input, lookup);
+    // Then
+    assert.strictEqual(res, expected);
+  });
+
   describe('With array', () => {
-    it('should return "undefined" for an index outside the array size', () => {
+    it('should return "undefined" (without error) for an index outside the array limit', () => {
       // Given
       const obj = {a: [1, 2]};
       const lookup = "a.42";
+      const expected = undefined;
+      // When
+      const result = getDeepProperty(obj, lookup);
+      // Then
+      assert.strictEqual(result, expected);
+    });
+
+    it('should return "undefined" (without error) for an index that is not an integer', () => {
+      // Given
+      const obj = ['a', 'b', 'c'];
+      const lookup = "a";
       const expected = undefined;
       // When
       const result = getDeepProperty(obj, lookup);

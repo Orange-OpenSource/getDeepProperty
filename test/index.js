@@ -11,6 +11,9 @@
  * @author Benoît BAILLEUX <benoit.bailleux@orange.com>
  */
 
+/**
+ * @ignore
+ */
 const fs = require("fs");
 const {writeSummary} = require('./testFramework');
 

@@ -11,10 +11,24 @@
  * @author Benoît BAILLEUX <benoit.bailleux@orange.com>
  */
 
+/**
+ * @module @orange-opensource/super-tiny-test-framework
+ */
+
 const errors = [];
 var testCount = 0;
 var errorCount = 0;
 
+/**
+ * Group of `it()` test cases with common semantic (e.g. error cases or tests with wrong input).
+ *
+ * Can be nested.
+ *
+ * The group description is written on the console.
+ *
+ * @param {string} desc - the tests group description
+ * @param {function} fn - a function without parameter containing a series of `it()` test cases
+ */
 const describe = (desc, fn) => {
   try {
     console.log('  '.repeat(describe.indent) + desc);
@@ -27,6 +41,17 @@ const describe = (desc, fn) => {
 }
 describe.indent = 1;
 
+/**
+ * A test case to run individually.
+ *
+ * Each test case should test one and only one feature and behavior.
+ *
+ * The test result is written on the console, with color according to the result.
+ * Errors are numbered to reference details in the "summary" section.
+ *
+ * @param {string} desc - the description of the test case, starting with "Should…"
+ * @param {function} fn - a function without parameter with the unit test code
+ */
 const it = (desc, fn) => {
   testCount++;
   try {
@@ -39,6 +64,14 @@ const it = (desc, fn) => {
   }
 };
 
+/**
+ * Write on the console a summary of the whole test campaign execution,
+ *
+ * This summary contains:
+ * * The number of successful tests
+ * * The number of failed tests
+ * * the numbered list of errors for failed tests, with difference between expected and real output
+ */
 const writeSummary = () => {
   console.log(`\n\x1b[32m${testCount - errorCount} passing\x1b[0m`);
   if (errorCount) {
